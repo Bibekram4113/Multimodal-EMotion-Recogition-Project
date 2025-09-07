@@ -44,16 +44,16 @@ Traditional unimodal FER systems often fail in real-world conditions (lighting v
 
 > ⚡ Note: You can directly load the dataset in Python via Hugging Face `datasets` library:
 
-⚡ Dataset Loading
+**⚡ Dataset Loading**
 
 You can load the multimodal dataset directly using Hugging Face:
 
 from datasets import load_dataset
 dataset = load_dataset("bibekram/emotion_multimodal")
 
-⚙️ Preprocessing
+**⚙️ Preprocessing**
 
-EEG:
+**EEG:**
 
 Normalization
 
@@ -63,7 +63,7 @@ Segmentation into 1–2s epochs
 
 Feature extraction: Theta Power, Skewness, Entropy, Wavelet Coefficients
 
-Thermal / Digital Images:
+**Thermal / Digital Images:**
 
 Face cropping
 
@@ -72,10 +72,10 @@ Resizing to 256×256 px
 Data augmentation: rotation, flipping, noise
 
 Feature extraction: Entropy, Energy, ORB & AKAZE keypoints
+**
+🔗 Multimodal Fusion Framework**
 
-🔗 Multimodal Fusion Framework
-
-Flow:
+**Flow:**
 
 EEG → EEG Features
 Thermal → Thermal Features
@@ -83,7 +83,7 @@ Digital → Digital Features
 All Features → Fusion → Deep Learning Classifier → Emotion Prediction
 
 
-Fusion Strategies:
+**Fusion Strategies:**
 
 Feature-Level Fusion: Combine extracted features before classification
 
@@ -91,9 +91,9 @@ Decision-Level Fusion: Combine classifier outputs
 
 Hybrid Fusion: Blend both approaches
 
-🛠️ Methodology
-
-Feature Extraction:
+**🛠️ Methodology**
+**
+Feature Extraction:**
 
 EEG: Power Spectral Density (PSD), wavelet decomposition
 
@@ -101,7 +101,7 @@ Thermal: Heat maps, texture analysis
 
 Digital: Facial landmarks, CNN-based features
 
-Deep Learning Models:
+**Deep Learning Models:**
 
 CNNs for spatial feature extraction from images
 
@@ -109,21 +109,21 @@ MLPs for EEG and fused features
 
 LSTM / Transformer modules for temporal dependencies (planned for future work)
 
-Correlation Analysis:
+**Correlation Analysis:**
 
 Surprise ↔ EEG Theta Power & Thermal Entropy (r = 0.605, p < 0.001)
 
 Sadness ↔ EEG Skewness & Thermal Energy
 
 Anger ↔ EEG Autocorrelation & AKAZE Keypoints
-
-Classification:
+**
+Classification:**
 
 Algorithms tested: Decision Tree, k-NN, MLP
 
 Evaluation Metrics: Accuracy, Precision, Recall, F1-score, Confusion Matrix
 
-📊 Results
+**📊 Results**
 Single-Modality Performance
 Modality	Model / Approach	Accuracy (%)	Precision	Recall	F1-Score
 EEG	MLP (512→256→128)	95	0.94	0.95	0.94
@@ -132,7 +132,7 @@ Digital	CNN (VGG-16, fine-tuned)	95	0.95	0.95	0.95
 
 Insight: Thermal images achieved the highest single-modality accuracy, while EEG and digital images provide complementary information for subtle emotional cues.
 
-Multimodal Fusion Performance
+**Multimodal Fusion Performance**
 
 Feature-Level Fusion: Concatenated features → MLP → Accuracy 99%
 
@@ -140,7 +140,7 @@ Decision-Level Fusion: Weighted averaging of classifier outputs → Accuracy ~98
 
 Hybrid Fusion: Combines feature- and decision-level outputs → Accuracy 99%, Precision 0.99, Recall 0.99, F1-Score 0.99
 
-Deep Learning Architecture:
+**Deep Learning Architecture:**
 
 CNNs (ResNet-18 for Thermal, VGG-16 for Digital) pretrained on ImageNet and fine-tuned
 
@@ -148,8 +148,8 @@ EEG features → MLP classifier (optional LSTM for temporal patterns)
 
 Fusion MLP: 3 hidden layers (512 → 256 → 128), ReLU, dropout 0.3, softmax output
 
-Correlation Across Modalities:
-
+**Correlation Across Modalities:
+**
 Strong inter-modality correlations improve recognition:
 
 Surprise: EEG Theta Power ↔ Thermal Entropy
@@ -161,7 +161,7 @@ Anger: EEG Autocorrelation ↔ AKAZE Digital Features
 For detailed results, tables, plots, and confusion matrices, refer to the full project report
 .
 
-💡 Applications
+**💡 Applications**
 
 Mental health monitoring and depression detection
 
@@ -171,7 +171,7 @@ Emotion-aware AI applications
 
 Security and surveillance systems
 
-🔮 Future Work
+**🔮 Future Work**
 
 Real-time implementation on edge devices
 
@@ -181,7 +181,7 @@ Investigating early, late, and hybrid fusion strategies
 
 Extending dataset for cross-cultural emotion recognition
 
-📜 Citation
+**📜 Citation**
 
 ICCSP Paper:
 
@@ -195,7 +195,7 @@ ICCSP Paper:
 }
 
 
-Project Report:
+**Project Report:**
 
 @MISC{bibek2025projectreport,
   author = {Bibek Ram},
