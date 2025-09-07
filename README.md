@@ -1,47 +1,53 @@
-**Multimodal Emotion Recognition using EEG, Thermal, and Digital Images**
+# Multimodal Emotion Recognition using EEG, Thermal, and Digital Images
 
 This repository contains the official implementation of our research work:
 
-“Multimodal Emotion Recognition via Fusion of EEG, Thermal Imaging, and Digital Facial Expressions”
-Published in: 2025 11th International Conference on Communication and Signal Processing (ICCSP)
-DOI: 10.1109/ICCSP64183.2025.11088814
+**“Multimodal Emotion Recognition via Fusion of EEG, Thermal Imaging, and Digital Facial Expressions”**  
+Published in: 2025 11th International Conference on Communication and Signal Processing (ICCSP)  
+DOI: [10.1109/ICCSP64183.2025.11088814](https://doi.org/10.1109/ICCSP64183.2025.11088814)
 
-**🎯 Objectives**
+---
 
-The objectives of this research are:
+## 🎯 Objectives
 
-To examine EEG signal changes related to various emotional states and relate them to facial thermal and digital image features.
+- Examine EEG signal changes related to various emotional states and relate them to facial thermal and digital image features.
+- Propose a deep-learning-based multimodal framework combining EEG, thermal, and digital image modalities for Facial Emotion Recognition (FER).
+- Evaluate and compare the performance of multimodal fusion against single-modality approaches to assess improvements in classification accuracy.
 
-To propose a deep-learning-based multimodal framework combining EEG, thermal, and digital image modalities for Facial Emotion Recognition (FER).
+---
 
-To evaluate and compare the performance of multimodal fusion against single-modality approaches to assess improvements in classification accuracy.
+## 🧠 Motivation
 
-**🧠 Motivation**
+Traditional unimodal FER systems often fail in real-world conditions (lighting variations, occlusions, suppressed expressions). By integrating neural (EEG), physiological (thermal imaging), and visual (digital images) signals, we aim to build a robust multimodal FER model that is:
 
-Traditional unimodal FER systems often fail in real-world conditions (lighting variations, occlusions, suppressed expressions).
-By integrating neural (EEG), physiological (thermal imaging), and visual (digital images) signals, we aim to build a robust multimodal FER model that is:
+- More accurate under real-world conditions  
+- More reliable for healthcare and affective computing  
+- Applicable to human-computer interaction, security, and mental health monitoring  
 
-More accurate under real-world conditions
+---
 
-More reliable for healthcare and affective computing
+## 📂 Dataset
 
-Applicable to human-computer interaction, security, and mental health monitoring
-
-**📂 Dataset**
-
-Participants: 50 healthy volunteers (age 20–28, ethically approved by SRM IEC #2992/IEC/2021)
-
-Stimuli: 60-second audiovisual clips inducing six emotions: Happy, Sad, Neutral, Anger, Surprise, Fear
+**Participants:** 50 healthy volunteers (age 20–28, ethically approved by SRM IEC #2992/IEC/2021)  
+**Stimuli:** 60-second audiovisual clips inducing six emotions: Happy, Sad, Neutral, Anger, Surprise, Fear  
 
 **Modalities:**
 
-EEG (10–20 electrode system, 100 Hz sampling, bandpass filtered 0.5–50 Hz)
+| Modality | Description |
+|----------|-------------|
+| EEG | 10–20 electrode system, 100 Hz sampling, bandpass filtered 0.5–50 Hz |
+| Thermal Images | FLIR A305SC infrared camera, 320×240 pixels |
+| Digital Images | DSLR camera, high-resolution facial expressions |
 
-Thermal images (FLIR A305SC infrared camera, 320×240 pixels)
+**Hugging Face Dataset Link:**  
+[Download full dataset](https://huggingface.co/datasets/bibekram/emotion_multimodal)  
 
-Digital images (DSLR camera, high-resolution facial expressions)
+> ⚡ Note: You can directly load the dataset in Python via Hugging Face `datasets` library:
 
-**⚙️ Preprocessing**
+```python
+from datasets import load_dataset
+dataset = load_dataset("bibekram/emotion_multimodal")
+⚙️ Preprocessing
 
 EEG:
 
@@ -53,7 +59,7 @@ Segmentation into 1–2s epochs
 
 Features: Theta Power, Skewness, Entropy, Wavelet Coefficients
 
-Thermal/Digital Images:
+Thermal / Digital Images:
 
 Cropping (face region)
 
@@ -63,37 +69,33 @@ Augmentation (rotation, flipping, noise)
 
 Features: Entropy, Energy, ORB & AKAZE keypoints
 
-**🔗 Multimodal Fusion Framework**
-flowchart TD
-  EEG[EEG Data] --> F1[EEG Features]
-  Thermal[Thermal Images] --> F2[Thermal Features]
-  Digital[Digital Images] --> F3[Digital Features]
-  F1 --> Fusion
-  F2 --> Fusion
-  F3 --> Fusion
-  Fusion --> DL[Deep Learning Classifier]
-  DL --> Out[Emotion Prediction]
+🔗 Multimodal Fusion Framework
 
+Flow:
+EEG → EEG Features
+Thermal → Thermal Features
+Digital → Digital Features
+All Features → Fusion → Deep Learning Classifier → Emotion Prediction
 
 Fusion Strategies:
 
-Feature-Level Fusion: Combining extracted features before classification
+Feature-Level Fusion: Combine extracted features before classification
 
-Decision-Level Fusion: Combining classifier outputs
+Decision-Level Fusion: Combine classifier outputs
 
-Hybrid Fusion: Blending both
+Hybrid Fusion: Blend both
 
-**🛠️ Methodology**
+🛠️ Methodology
 
 Feature Extraction: EEG (PSD, wavelet), Thermal (heat maps, texture), Digital (landmarks, CNN features)
 
-Correlation Analysis: Showed strong relationship (e.g., EEG Theta Power ↔ Thermal Entropy for Surprise, r = 0.605, p < 0.001)
+Correlation Analysis: Strong relationship found (e.g., EEG Theta Power ↔ Thermal Entropy for Surprise, r = 0.605, p < 0.001)
 
-Classification: Decision Tree, k-NN, and MLP were tested across modalities
+Classification: Decision Tree, k-NN, and MLP tested across modalities
 
 Evaluation Metrics: Accuracy, Precision, Recall, F1-score, Confusion Matrix
 
-**📊 Results**
+📊 Results
 
 Single-Modality Accuracy:
 
@@ -113,34 +115,32 @@ Sadness ↔ EEG Skewness & Thermal Energy
 
 Anger ↔ EEG Autocorrelation & AKAZE Keypoints
 
-👉 These results validate the synergy of neural, physiological, and visual cues for robust emotion recognition.
-**
-💡 Applications**
+💡 Applications
 
 Healthcare: Mental health tracking, depression detection
 
-Human-Computer Interaction: Adaptive systems that respond to user emotions
+Human-Computer Interaction: Adaptive systems responding to emotions
 
 Affective Computing: Emotion-aware AI systems
 
 Security & Defense: Emotion-based surveillance and stress detection
-**
-🔮 Future Work**
+
+🔮 Future Work
 
 Real-time implementation on edge devices
 
-Using CNNs, LSTMs, and Transformers for stronger temporal-spatial feature learning
+Use of CNNs, LSTMs, and Transformers for temporal-spatial feature learning
 
 Investigating early vs. late vs. hybrid fusion approaches
 
 Extending dataset to cover cross-cultural emotion representation
 
-**📜 Citation**
+📜 Citation
 
 If you use this code or dataset in your research, please cite:
 
 @INPROCEEDINGS{11088814,
-  author={YourName, et al.},
+  author={Bibek Ram, et al.},
   booktitle={2025 11th International Conference on Communication and Signal Processing (ICCSP)},
   title={Multimodal Emotion Recognition via Fusion of EEG, Thermal, and Digital Images},
   year={2025},
