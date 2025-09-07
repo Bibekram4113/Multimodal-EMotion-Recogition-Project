@@ -44,9 +44,13 @@ Traditional unimodal FER systems often fail in real-world conditions (lighting v
 
 > ⚡ Note: You can directly load the dataset in Python via Hugging Face `datasets` library:
 
-```python
+⚡ Dataset Loading
+
+You can load the multimodal dataset directly using Hugging Face:
+
 from datasets import load_dataset
 dataset = load_dataset("bibekram/emotion_multimodal")
+
 ⚙️ Preprocessing
 
 EEG:
@@ -57,25 +61,27 @@ Bandpass filter (0.5–50 Hz)
 
 Segmentation into 1–2s epochs
 
-Features: Theta Power, Skewness, Entropy, Wavelet Coefficients
+Feature extraction: Theta Power, Skewness, Entropy, Wavelet Coefficients
 
 Thermal / Digital Images:
 
-Cropping (face region)
+Face cropping
 
-Resizing (256×256 px)
+Resizing to 256×256 px
 
-Augmentation (rotation, flipping, noise)
+Data augmentation: rotation, flipping, noise
 
-Features: Entropy, Energy, ORB & AKAZE keypoints
+Feature extraction: Entropy, Energy, ORB & AKAZE keypoints
 
 🔗 Multimodal Fusion Framework
 
 Flow:
+
 EEG → EEG Features
 Thermal → Thermal Features
 Digital → Digital Features
 All Features → Fusion → Deep Learning Classifier → Emotion Prediction
+
 
 Fusion Strategies:
 
@@ -83,29 +89,27 @@ Feature-Level Fusion: Combine extracted features before classification
 
 Decision-Level Fusion: Combine classifier outputs
 
-Hybrid Fusion: Blend both
+Hybrid Fusion: Blend both approaches
 
 🛠️ Methodology
 
-Feature Extraction
+Feature Extraction:
 
 EEG: Power Spectral Density (PSD), wavelet decomposition
 
 Thermal: Heat maps, texture analysis
 
-Digital Images: Facial landmarks, CNN-based features
+Digital: Facial landmarks, CNN-based features
 
-Deep Learning Methods
+Deep Learning Models:
 
 CNNs for spatial feature extraction from images
 
-MLPs for EEG and combined features
+MLPs for EEG and fused features
 
-LSTM / Transformer modules for capturing temporal dependencies (planned for future work)
+LSTM / Transformer modules for temporal dependencies (planned for future work)
 
-Correlation Analysis
-
-Strong modality correlations found, e.g.:
+Correlation Analysis:
 
 Surprise ↔ EEG Theta Power & Thermal Entropy (r = 0.605, p < 0.001)
 
@@ -113,131 +117,73 @@ Sadness ↔ EEG Skewness & Thermal Energy
 
 Anger ↔ EEG Autocorrelation & AKAZE Keypoints
 
-Classification
+Classification:
 
 Algorithms tested: Decision Tree, k-NN, MLP
 
 Evaluation Metrics: Accuracy, Precision, Recall, F1-score, Confusion Matrix
 
 📊 Results
-
-The proposed multimodal emotion recognition system was evaluated using EEG, thermal, and digital facial image data. Both single-modality models and multimodal fusion frameworks were tested, incorporating classical and deep learning approaches.
-
-1. Single-Modality Performance
-Modality	Deep Learning Model / Approach	Accuracy (%)	Precision	Recall	F1-Score
-EEG	MLP (3 hidden layers: 512→256→128)	95	0.94	0.95	0.94
+Single-Modality Performance
+Modality	Model / Approach	Accuracy (%)	Precision	Recall	F1-Score
+EEG	MLP (512→256→128)	95	0.94	0.95	0.94
 Thermal	CNN (ResNet-18, fine-tuned)	98.3	0.98	0.98	0.98
 Digital	CNN (VGG-16, fine-tuned)	95	0.95	0.95	0.95
 
-Insight: Thermal images achieved the highest single-modality accuracy, while EEG and digital images provided complementary information for subtle emotional cues.
+Insight: Thermal images achieved the highest single-modality accuracy, while EEG and digital images provide complementary information for subtle emotional cues.
 
-2. Multimodal Fusion Performance
+Multimodal Fusion Performance
 
-Three fusion strategies were implemented to combine EEG, thermal, and digital image features:
+Feature-Level Fusion: Concatenated features → MLP → Accuracy 99%
 
-a) Feature-Level Fusion
+Decision-Level Fusion: Weighted averaging of classifier outputs → Accuracy ~98.7%
 
-Approach: Concatenate extracted features from all modalities.
+Hybrid Fusion: Combines feature- and decision-level outputs → Accuracy 99%, Precision 0.99, Recall 0.99, F1-Score 0.99
 
-Classifier: Deep MLP (3 hidden layers, ReLU activations, dropout 0.3).
+Deep Learning Architecture:
 
-Result: Accuracy 99%, significantly higher than single-modality performance.
+CNNs (ResNet-18 for Thermal, VGG-16 for Digital) pretrained on ImageNet and fine-tuned
 
-b) Decision-Level Fusion
+EEG features → MLP classifier (optional LSTM for temporal patterns)
 
-Approach: Fuse classifier outputs (probabilities) using weighted averaging.
+Fusion MLP: 3 hidden layers (512 → 256 → 128), ReLU, dropout 0.3, softmax output
 
-Result: Accuracy ~98.7%, demonstrating robustness against noise or missing modality data.
+Correlation Across Modalities:
 
-c) Hybrid Fusion
+Strong inter-modality correlations improve recognition:
 
-Approach: Combine feature-level MLP outputs and decision-level CNN predictions.
-
-Result: Best performance achieved:
-
-Accuracy: 99%
-
-Precision: 0.99
-
-Recall: 0.99
-
-F1-Score: 0.99
-
-3. Deep Learning Architecture Details
-
-CNNs for Images:
-
-Thermal Images: ResNet-18 pretrained on ImageNet
-
-Digital Images: VGG-16 pretrained on ImageNet
-
-Fine-tuned on emotion-labeled datasets
-
-EEG Processing:
-
-Feature extraction: PSD, wavelets, entropy, skewness
-
-MLP classifier for final emotion prediction
-
-LSTM modules tested for temporal dependencies
-
-Fusion MLP Network:
-
-Input: Concatenated EEG + Thermal + Digital features
-
-Hidden layers: 512 → 256 → 128 neurons, ReLU activations
-
-Dropout: 0.3
-
-Output: Softmax layer for six-class emotion classification
-
-4. Correlation Analysis Across Modalities
-
-Strong inter-modality correlations enhanced recognition:
-
-Surprise: EEG Theta Power ↔ Thermal Entropy (r = 0.605, p < 0.001)
+Surprise: EEG Theta Power ↔ Thermal Entropy
 
 Sadness: EEG Skewness ↔ Thermal Energy
 
 Anger: EEG Autocorrelation ↔ AKAZE Digital Features
 
-Insight: Fusion leverages complementary strengths of neural, physiological, and visual cues for highly robust emotion recognition.
-
-5. Key Takeaways
-
-Multimodal fusion consistently outperforms single-modality models.
-
-Deep learning models (CNNs + MLP) effectively capture spatial and temporal patterns.
-
-Hybrid fusion provides robustness and high accuracy, suitable for real-world systems.
-
-Achieves near-perfect performance (99% accuracy), validating the integration of EEG, thermal, and digital signals.
-
 For detailed results, tables, plots, and confusion matrices, refer to the full project report
+.
 
 💡 Applications
 
-Healthcare: Mental health tracking, depression detection
+Mental health monitoring and depression detection
 
-Human-Computer Interaction: Adaptive systems responding to emotions
+Adaptive human-computer interaction systems
 
-Affective Computing: Emotion-aware AI systems
+Emotion-aware AI applications
 
-Security & Defense: Emotion-based surveillance and stress detection
+Security and surveillance systems
 
 🔮 Future Work
 
 Real-time implementation on edge devices
 
-Use of CNNs, LSTMs, and Transformers for temporal-spatial feature learning
+Advanced deep learning models: CNN-LSTM, Transformers
 
-Investigating early vs. late vs. hybrid fusion approaches
+Investigating early, late, and hybrid fusion strategies
 
-Extending dataset to cover cross-cultural emotion representation
+Extending dataset for cross-cultural emotion recognition
 
 📜 Citation
 
-If you use this code or dataset in your research, please cite:
+ICCSP Paper:
 
 @INPROCEEDINGS{11088814,
   author={Bibek Ram, et al.},
@@ -246,4 +192,15 @@ If you use this code or dataset in your research, please cite:
   year={2025},
   pages={1-8},
   doi={10.1109/ICCSP64183.2025.11088814}
+}
+
+
+Project Report:
+
+@MISC{bibek2025projectreport,
+  author = {Bibek Ram},
+  title = {Multimodal Emotion Recognition via Fusion of EEG, Thermal, and Digital Images – Project Report},
+  year = {2025},
+  howpublished = {Project Report, SRM Institute of Science and Technology},
+  note = {Available at: Project Report/project_report.docx}
 }
