@@ -116,8 +116,8 @@ Surprise ↔ EEG Theta Power & Thermal Entropy (r = 0.605, p < 0.001)
 Sadness ↔ EEG Skewness & Thermal Energy
 
 Anger ↔ EEG Autocorrelation & AKAZE Keypoints
-**
-Classification:**
+
+**Classification:**
 
 Algorithms tested: Decision Tree, k-NN, MLP
 
@@ -125,10 +125,12 @@ Evaluation Metrics: Accuracy, Precision, Recall, F1-score, Confusion Matrix
 
 **📊 Results**
 Single-Modality Performance
-Modality	Model / Approach	Accuracy (%)	Precision	Recall	F1-Score
-EEG	MLP (512→256→128)	95	0.94	0.95	0.94
-Thermal	CNN (ResNet-18, fine-tuned)	98.3	0.98	0.98	0.98
-Digital	CNN (VGG-16, fine-tuned)	95	0.95	0.95	0.95
+| Modality | Model / Approach            | Accuracy (%) | Precision | Recall | F1-Score |
+| -------- | --------------------------- | ------------ | --------- | ------ | -------- |
+| EEG      | MLP (512→256→128)           | 95           | 0.94      | 0.95   | 0.94     |
+| Thermal  | CNN (ResNet-18, fine-tuned) | 98.3         | 0.98      | 0.98   | 0.98     |
+| Digital  | CNN (VGG-16, fine-tuned)    | 95           | 0.95      | 0.95   | 0.95     |
+
 
 Insight: Thermal images achieved the highest single-modality accuracy, while EEG and digital images provide complementary information for subtle emotional cues.
 
